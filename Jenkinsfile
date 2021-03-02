@@ -1,7 +1,7 @@
 pipeline{
 	agent any
 	environment{
-		branch=${Environment}
+		branch="${Environment}"
 		scannerHome= tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 		dtr="nishugoel0411"
 	}
