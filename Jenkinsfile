@@ -26,8 +26,11 @@ pipeline{
 		}
 		stage('Build Docker File'){
 			steps{
-				bat "docker build --no-cache -t ${dtr}/webApp4v1:${BUILD_NUMBER}"
+				bat "docker build --no-cache -t ${dtr}/webapp4v1:${BUILD_NUMBER}"
 			}
+		}
+		stage('Push Image to docker hub'){
+			bat "docker push ${dtr}/webapp4v1:${BUILD_NUMBER}"
 		}
 	}
 }
