@@ -14,6 +14,7 @@ namespace WebApplication4
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            Console.WriteLine("Hello from feature branch");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
