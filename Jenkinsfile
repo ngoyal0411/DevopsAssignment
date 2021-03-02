@@ -1,6 +1,7 @@
 pipeline{
 	agent any
 	environment{
+		scannerHome= tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 		dtr="nishugoel0411"
 	}
 	stages{
@@ -17,6 +18,13 @@ pipeline{
 		stage('build'){
 			steps{
 				bat "dotnet build -c Release -o WebApplication4/app/build"
+			}
+		}
+		stage(Start SonarQube Analysis){
+			steps{
+				withSonarQubeEnv(Test_Sonar){
+					bat "dotnet ${scannerHome}/SonarScanner.MSBUILD.dll begin /k:nagp-hello-world /n:nagp-hello-world /v:1.0"
+				}
 			}
 		}
 		stage('Release Artifacts'){
