@@ -20,9 +20,9 @@ pipeline{
 				bat "dotnet build -c Release -o WebApplication4/app/build"
 			}
 		}
-		stage(Start SonarQube Analysis){
+		stage('Start SonarQube Analysis'){
 			steps{
-				withSonarQubeEnv(Test_Sonar){
+				withSonarQubeEnv('Test_Sonar'){
 					bat "dotnet ${scannerHome}/SonarScanner.MSBUILD.dll begin /k:nagp-hello-world /n:nagp-hello-world /v:1.0"
 				}
 			}
