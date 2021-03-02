@@ -30,7 +30,14 @@ pipeline{
 			}
 		}
 		stage('Push Image to docker hub'){
-			bat "docker push ${dtr}/webapp4v1:${BUILD_NUMBER}"
+			steps{
+				bat "docker push ${dtr}/webapp4v1:${BUILD_NUMBER}"
+			}
+		}
+		stage('Docker Deployment'){
+			steps{
+				bat "docker run --name c-mydevopscontainer -d -p 6001:80 ${dtr}/webapp4v1:${BUILD_NUMBER}"
+			}
 		}
 	}
 }
