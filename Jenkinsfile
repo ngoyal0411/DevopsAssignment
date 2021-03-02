@@ -1,14 +1,14 @@
 pipeline{
 	agent any
 	environment{
-		branch="${Environment}"
+		branch="Develop"
 		scannerHome= tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 		dtr="nishugoel0411"
 	}
 	stages{
 		stage('checkout'){
 			steps{
-				checkout scm
+				checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6f0eb1a7-201a-4036-a46a-ca2544b43a11', url: 'url: \'https://github.com/ngoyal0411/DevopsAssignment.git\'']]])
 			}
 		}
 		stage('nuget'){
