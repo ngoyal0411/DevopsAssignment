@@ -1,6 +1,7 @@
 pipeline{
 	agent any
 	environment{
+		branch=${Environment}
 		scannerHome= tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 		dtr="nishugoel0411"
 	}
@@ -15,15 +16,22 @@ pipeline{
 				bat "dotnet restore"
 			}
 		}
+		stage('Start SonarQube Analysis'){
+			steps{
+				withSonarQubeEnv('Test_Sonar'){
+					bat "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:nagp-hello-world /n:nagp-hello-world /v:1.0"
+				}
+			}
+		}
 		stage('build'){
 			steps{
 				bat "dotnet build -c Release -o WebApplication4/app/build"
 			}
 		}
-		stage('Start SonarQube Analysis'){
+		stage('SonarQube Analysis End'){
 			steps{
 				withSonarQubeEnv('Test_Sonar'){
-					bat "dotnet ${scannerHome}/SonarScanner.MSBUILD.dll begin /k:nagp-hello-world /n:nagp-hello-world /v:1.0"
+					bat "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
 				}
 			}
 		}
