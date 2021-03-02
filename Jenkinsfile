@@ -24,5 +24,10 @@ pipeline{
 				bat "dotnet publish -c Release -o WebApplication4/app/publish"
 			}
 		}
+		stage('Build Docker File'){
+			steps{
+				bat "docker build --no-cache -t ${dtr}/webApp4v1:${BUILD_NUMBER}"
+			}
+		}
 	}
 }
